@@ -1,4 +1,5 @@
 import pytube
+from pytube import Playlist
 import tkinter as tk
 from tkinter import *
 import tkinter.filedialog as filedialog
@@ -30,11 +31,14 @@ def directory():
     return tempdir
 
 def downloader():
-	link=str(entry.get())
-	yt = pytube.YouTube(link)
-	stream = yt.streams.get_by_itag(ok())
-	destination="E:\Movies"
-	stream.download(directory())
+    link=str(entry.get())
+    if var2.get() == 'Single-Video':
+        yt = pytube.YouTube(link)
+        stream = yt.streams.get_by_itag(ok())
+        stream.download(directory())
+    if var2.get() == 'Playlist':
+        pl = Playlist(link)
+        pl.download_all(directory())
 
 title=tk.Label(text="Welcome to YouTube Downloader.",font=40)
 title.grid(column=0,row=0,padx=10, pady=10)
@@ -56,5 +60,11 @@ var.set("360p")
 
 option = OptionMenu(window, var, "1080p", "720p", "360p", "240p","144p","audios")
 option.grid(column=1,row=4,padx=10, pady=10)
+
+var2 = StringVar(window)
+var2.set("Single-Video")
+
+option2 = OptionMenu(window, var2, "Single-Video","Playlist")
+option2.grid(column=2,row=4,padx=10, pady=10)
 
 window.mainloop()
