@@ -1,15 +1,26 @@
 import pytube
 import tkinter as tk
+import tkinter.filedialog as filedialog
+import os
 
 window = tk.Tk()
 window.title("YouTube Downloader")
+
+# tempdir = ''
+
+def directory():
+    root = tk.Tk()
+    root.withdraw()
+    currdir = os.getcwd()
+    tempdir = filedialog.askdirectory(parent=root, initialdir=currdir, title='Please select a directory')
+    return tempdir
 
 def downloader():
 	link=str(entry.get())
 	yt = pytube.YouTube(link)
 	stream = yt.streams.first()
 	destination="E:\Movies"
-	stream.download(destination)
+	stream.download(directory())
 
 title=tk.Label(text="Welcome to YouTube Downloader.",font=40)
 title.grid(column=0,row=0,padx=10, pady=10)
@@ -20,7 +31,10 @@ label.grid(column=0,row=1,padx=10, pady=10)
 entry=tk.Entry()
 entry.grid(column=0,row=2)
 
-button=tk.Button(text="Click Here",font=15,bg="red",command=downloader)
-button.grid(column=0,row=3,padx=10, pady=10)
+button=tk.Button(text="Download",font=15,bg="red",command=downloader)
+button.grid(column=2,row=3,padx=10, pady=10)
+
+button=tk.Button(text="Location",font=15,bg="green",command=directory)
+button.grid(column=1,row=3,padx=10, pady=10)
 
 window.mainloop()
