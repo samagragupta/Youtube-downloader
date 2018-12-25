@@ -18,6 +18,8 @@ def ok():
         return '133'
     if var.get() == '144p':
         return '160'   
+    if var.get() == 'audio':
+        return '140'    
 
 
 def directory():
@@ -52,7 +54,7 @@ button2.grid(column=1,row=3,padx=10, pady=10)
 var = StringVar(window)
 var.set("360p")
 
-option = OptionMenu(window, var, "1080p", "720p", "360p", "240p","144p")
+option = OptionMenu(window, var, "1080p", "720p", "360p", "240p","144p","audios")
 option.grid(column=1,row=4,padx=10, pady=10)
 
 window.mainloop()
